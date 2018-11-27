@@ -21,6 +21,6 @@ do
   git clone https://github.com/venicegeo/$project
   pushd $project
   mvn org.codehaus.mojo:versions-maven-plugin:2.7:use-dep-version -Dincludes=org.venice.piazza:pz-jobcommon -DdepVersion=LATEST -DforceVersion=true
-  mvn -Pbeachfront clean install -DskipTests
+  mvn -Pbeachfront clean install -DskipTests || break
   popd
 done
