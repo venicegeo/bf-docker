@@ -8,14 +8,38 @@ services:
     volumes:
       - maven:/root/.m2/repository
     command: /var/lib/beachfront/docker_javabuild.sh
+  access:
+    image: beachfront/javabuild:1.0.0
+    depends_on:
+      - javabuild
+      - rabbitmq
+      - postgis
+    expose:
+      - "8081"
+    volumes:
+      - maven:/root/.m2/repository
+    command: java -jar /root/.m2/repository/org/venice/piazza/piazza-access/1.0.0/piazza-access-1.0.0.jar
   gateway:
     image: beachfront/javabuild:1.0.0
     depends_on:
       - javabuild
-    ports:
-      - "8081:8081"
+      - rabbitmq
+    expose:
+      - "8085"
     volumes:
       - maven:/root/.m2/repository
     command: java -jar /root/.m2/repository/org/venice/piazza/piazza-gateway/1.0.0/piazza-gateway-1.0.0.jar
+  rabbitmq:
+    image: rabbitmq:3.6.6-management
+    expose:
+      - "5672"
+  postgis:
+    image: mdillon/postgis:9.5
+    environment:
+      - POSTGRES_USER=piazza
+      - POSTGRES_PASSWORD=piazza
+      - POSTGRES_DB=piazza
+    expose:
+      - "5432"
 volumes:
   maven:
