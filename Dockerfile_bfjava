@@ -11,5 +11,6 @@ RUN apt-get update && apt-get install -y \
     openjdk-8-jdk
     
 COPY ./docker_build.sh /var/lib/beachfront/docker_build.sh
+COPY ./maven/settings.xml /etc/maven/settings.xml
 
 CMD ["echo", "This image has no default run command."]
