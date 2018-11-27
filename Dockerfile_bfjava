@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:openjdk-r/ppa
 RUN apt-get update && apt-get install -y \
     openjdk-8-jdk
+
+RUN update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
     
 COPY ./docker_javabuild.sh /var/lib/beachfront/docker_javabuild.sh
 COPY ./maven/settings.xml /etc/maven/settings.xml
