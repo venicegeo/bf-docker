@@ -10,7 +10,7 @@ RUN add-apt-repository ppa:openjdk-r/ppa
 RUN apt-get update && apt-get install -y \
     openjdk-8-jdk
     
-COPY ./docker_build.sh /var/lib/beachfront/docker_build.sh
+COPY ./docker_javabuild.sh /var/lib/beachfront/docker_javabuild.sh
 COPY ./maven/settings.xml /etc/maven/settings.xml
 
 CMD ["echo", "This image has no default run command."]
