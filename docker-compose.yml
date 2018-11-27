@@ -5,6 +5,4 @@ services:
       context: .
       dockerfile: Dockerfile_bfjava
     image: beachfront/bfjava:1.0.0
-    environment:
-      - ARTIFACT_STORAGE_URL
     command: /var/lib/beachfront/docker_build.sh
