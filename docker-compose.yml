@@ -1,12 +1,21 @@
 version: '3'
 services:
-  bfjava:
+  javabuild:
     build:
       context: .
-      dockerfile: Dockerfile_bfjava
-    image: beachfront/bfjava:1.0.0
+      dockerfile: Dockerfile_javabuild
+    image: beachfront/javabuild:1.0.0
     volumes:
       - maven:/root/.m2/repository
     command: /var/lib/beachfront/docker_javabuild.sh
+  gateway:
+    image: beachfront/javabuild:1.0.0
+    depends_on:
+      - javabuild
+    ports:
+      - "8081:8081"
+    volumes:
+      - maven:/root/.m2/repository
+    command: java -jar /root/.m2/repository/org/venice/piazza/piazza-gateway/1.0.0/piazza-gateway-1.0.0.jar
 volumes:
   maven:
