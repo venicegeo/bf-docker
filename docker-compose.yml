@@ -26,8 +26,6 @@ services:
       - geoserver
     expose:
       - "8085"
-    ports:
-      - "8085:8085"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -51,8 +49,6 @@ services:
       - rabbitmq
     expose:
       - "8081"
-    ports:
-      - "8081:8081"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -62,6 +58,27 @@ services:
       - vcap.services.pz-blobstore.credentials.access_key_id
       - vcap.services.pz-blobstore.credentials.secret_access_key
       - vcap.services.pz-blobstore.credentials.encryption_key
+  idam:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8080"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-idam-1.0.0.jar
+    environment:
+      - spring.profiles.active=disable-authn
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
   rabbitmq:
     image: rabbitmq:3.6.6-management
     expose:
