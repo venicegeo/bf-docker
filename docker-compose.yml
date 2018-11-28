@@ -19,6 +19,8 @@ services:
     image: beachfront/ui:1.0.0
     ports:
       - "8080:8080"
+    environment:
+      - API_ROOT=http://bfapi
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -52,8 +54,18 @@ services:
       - javabuild
       - javaruntime
       - rabbitmq
+      - access
+      - ingest
+      - jobmanager
+      - servicecontroller
+      - idam
     links:
       - rabbitmq
+      - access
+      - ingest
+      - jobmanager
+      - servicecontroller
+      - idam
     expose:
       - "8081"
     volumes:
@@ -93,9 +105,11 @@ services:
       - javaruntime
       - rabbitmq
       - postgis
+      - access
     links:
       - rabbitmq
       - postgis
+      - access
     expose:
       - "8084"
     volumes:
