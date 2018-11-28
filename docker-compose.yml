@@ -6,11 +6,17 @@ services:
       dockerfile: Dockerfile_javabuild
     image: beachfront/javabuild:1.0.0
     volumes:
-      - maven:/root/.m2/repository
+      - bfjars:/var/lib/beachfront/target
+  javaruntime:
+    build:
+      context: .
+      dockerfile: Dockerfile_javaruntime
+    image: beachfront/javaruntime:1.0.0
   access:
-    image: beachfront/javabuild:1.0.0
+    image: beachfront/javaruntime:1.0.0
     depends_on:
       - javabuild
+      - javaruntime
       - rabbitmq
       - postgis
       - geoserver
@@ -21,12 +27,13 @@ services:
     expose:
       - "8081"
     volumes:
-      - maven:/root/.m2/repository
-    command: java -jar /root/.m2/repository/org/venice/piazza/piazza-access/1.0.0/piazza-access-1.0.0.jar
+      - bfjars:/var/lib/beachfront/target
+    command: java -jar target/*access*.jar
   gateway:
-    image: beachfront/javabuild:1.0.0
+    image: beachfront/javaruntime:1.0.0
     depends_on:
       - javabuild
+      - javaruntime
       - rabbitmq
       - access
     links:
@@ -35,8 +42,8 @@ services:
     expose:
       - "8085"
     volumes:
-      - maven:/root/.m2/repository
-    command: java -jar /root/.m2/repository/org/venice/piazza/piazza-gateway/1.0.0/piazza-gateway-1.0.0.jar
+      - bfjars:/var/lib/beachfront/target
+    command: java -jar target/*gateway*.jar
   rabbitmq:
     image: rabbitmq:3.6.6-management
     expose:
@@ -58,4 +65,4 @@ services:
     expose:
       - "8080"
 volumes:
-  maven:
+  bfjars:
