@@ -36,9 +36,9 @@ services:
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
-      - vcap.services.pz-blobstore.credentials.access_key_id
-      - vcap.services.pz-blobstore.credentials.secret_access_key
-      - vcap.services.pz-blobstore.credentials.encryption_key
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
   gateway:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -55,9 +55,9 @@ services:
     command: java -jar target/piazza-gateway-1.0.0.jar
     environment:
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
-      - vcap.services.pz-blobstore.credentials.access_key_id
-      - vcap.services.pz-blobstore.credentials.secret_access_key
-      - vcap.services.pz-blobstore.credentials.encryption_key
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
   idam:
     image: beachfront/javaruntime:1.0.0
     depends_on:

@@ -68,5 +68,4 @@ do
 done
 echo "Rabbitmq found"
 
-echo "$cmd"
 $cmd
