@@ -28,7 +28,7 @@ services:
       - "8081"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    command: java -jar target/*access*.jar
+    command: java -jar target/piazza-access-1.0.0.jar
   gateway:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -43,7 +43,7 @@ services:
       - "8085"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    command: java -jar target/*gateway*.jar
+    command: java -jar target/piazza-gateway-1.0.0.jar
   rabbitmq:
     image: rabbitmq:3.6.6-management
     expose:

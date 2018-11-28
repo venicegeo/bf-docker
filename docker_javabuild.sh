@@ -17,8 +17,8 @@ declare -a projects=("pz-access"
                      "pz-idam"
                      "pz-ingest"
                      "pz-jobmanager"
-                     "pz-servicecontroller"
-                     "bf-api")
+                     "pz-servicecontroller")
+                   #  "bf-api") BROKEN
 for project in "${projects[@]}"
 do
   git clone https://github.com/venicegeo/$project
