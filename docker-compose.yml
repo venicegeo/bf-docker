@@ -7,7 +7,6 @@ services:
     image: beachfront/javabuild:1.0.0
     volumes:
       - maven:/root/.m2/repository
-    command: /var/lib/beachfront/docker_javabuild.sh
   access:
     image: beachfront/javabuild:1.0.0
     depends_on:
