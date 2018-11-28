@@ -33,6 +33,7 @@ services:
     entrypoint: /var/lib/beachfront/entrypoint.sh
     command: java -jar target/piazza-access-1.0.0.jar
     environment:
+      - spring.profiles.active=basic-geoserver-auth
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
