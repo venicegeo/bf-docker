@@ -26,9 +26,11 @@ services:
       - geoserver
     expose:
       - "8081"
+    ports:
+      - "8081:8081"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh --postgis --rabbitmq --geoserver
+    entrypoint: /var/lib/beachfront/entrypoint.sh
     command: java -jar target/piazza-access-1.0.0.jar
     environment:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
