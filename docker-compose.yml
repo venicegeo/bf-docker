@@ -79,6 +79,69 @@ services:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+  ingest:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8084"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-ingest-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
+  jobmanager:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8083"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-jobmanager-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+  servicecontroller:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8088"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazzaServiceController-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
   rabbitmq:
     image: rabbitmq:3.6.6-management
     expose:

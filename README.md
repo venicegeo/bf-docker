@@ -1,2 +1,2 @@
-# bf-docker
+# Beachfront Docker
 Dockerizing Beachfront
