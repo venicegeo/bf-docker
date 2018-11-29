@@ -26,6 +26,8 @@ services:
       context: .
       dockerfile: Dockerfile_tideprediction
     image: beachfront/tideprediction:1.0.0
+    expose:
+      - "8080"
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
