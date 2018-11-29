@@ -3,19 +3,19 @@ services:
   javabuild:
     build:
       context: .
-      dockerfile: Dockerfile_javabuild
+      dockerfile: dockerfile/Dockerfile_javabuild
     image: beachfront/javabuild:1.0.0
     volumes:
       - bfjars:/var/lib/beachfront/target
   javaruntime:
     build:
       context: .
-      dockerfile: Dockerfile_javaruntime
+      dockerfile: dockerfile/Dockerfile_javaruntime
     image: beachfront/javaruntime:1.0.0
   ui:
     build:
       context: .
-      dockerfile: Dockerfile_ui
+      dockerfile: dockerfile/Dockerfile_ui
     image: beachfront/ui:1.0.0
     ports:
       - "8080:8080"
@@ -24,10 +24,15 @@ services:
   tideprediction:
     build:
       context: .
-      dockerfile: Dockerfile_tideprediction
+      dockerfile: dockerfile/Dockerfile_tideprediction
     image: beachfront/tideprediction:1.0.0
     expose:
       - "8080"
+  ndwi:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_ndwi
+    image: beachfront/ndwi:1.0.0
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
