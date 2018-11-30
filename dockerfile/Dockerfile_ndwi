@@ -1,30 +1,26 @@
-FROM cloudfoundry/cflinuxfs2:1.46.0
+FROM developmentseed/geolambda:1.0.0
 
-WORKDIR /var/lib/beachfront
+RUN \
+    yum makecache fast; \
+    yum install -y agg-devel;
 
-RUN apt-get update && apt-get install -y software-properties-common
-RUN add-apt-repository ppa:ubuntugis/ppa
-RUN apt-get update && apt-get install -y \
-    git-core \
-    python-pip \
-    python-setuptools \
-    libmysqlclient-dev \ 
-    python-numpy \
-    python-dev \
-    libgdal-dev \
-    python-gdal \
-    swig \
-    g++ \
-    libagg-dev \
-    libpotrace-dev \
-    golang-go \
-    gdal-bin
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
+ENV \
+    POTRACE_VERSION=1.15 \
+    PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 
-RUN git clone https://github.com/venicegeo/beachfront-py.git
-WORKDIR /var/lib/beachfront/beachfront-py
-RUN pip install -r requirements.txt
-RUN pip install .
+# install potrace
+RUN \
+    wget http://potrace.sourceforge.net/download/$POTRACE_VERSION/potrace-$POTRACE_VERSION.tar.gz; \
+    tar -xzvf potrace-$POTRACE_VERSION.tar.gz; \
+    cd potrace-$POTRACE_VERSION; \
+    ./configure --with-libpotrace; \
+    make && make install && cd .. && \
+    rm -rf potrace-$POTRACE_VERSION*
+
+RUN \
+    pip install beachfront==0.2.5
+    pip install git+https://github.com/venicegeo/bfalg-ndwi@1.1.4
+
+WORKDIR /home/beachfront
 
 CMD ["echo", "This image has no default run command."]
