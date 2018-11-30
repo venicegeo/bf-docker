@@ -33,6 +33,35 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile_ndwi
     image: beachfront/ndwi:1.0.0
+  bfapi:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+      - geoserver
+      - gateway
+      - tideprediction
+    links:
+      - rabbitmq
+      - postgis
+      - geoserver
+      - gateway
+      - tideprediction
+    expose: 
+      - "8080"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/bf-api-2.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
+      - liquibase.user=piazza
+      - liquibase.password=piazza
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:

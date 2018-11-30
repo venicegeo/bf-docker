@@ -8,7 +8,7 @@ ENV \
     POTRACE_VERSION=1.15 \
     PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 
-# install potrace
+# Install potrace
 RUN \
     wget http://potrace.sourceforge.net/download/$POTRACE_VERSION/potrace-$POTRACE_VERSION.tar.gz; \
     tar -xzvf potrace-$POTRACE_VERSION.tar.gz; \
@@ -17,9 +17,8 @@ RUN \
     make && make install && cd .. && \
     rm -rf potrace-$POTRACE_VERSION*
 
-RUN \
-    pip install beachfront==0.2.5
-    pip install git+https://github.com/venicegeo/bfalg-ndwi@1.1.4
+RUN pip install beachfront==0.2.5
+RUN pip install git+https://github.com/venicegeo/bfalg-ndwi@1.1.4
 
 WORKDIR /home/beachfront
 
