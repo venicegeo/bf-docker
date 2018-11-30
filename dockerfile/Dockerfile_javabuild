@@ -15,6 +15,6 @@ RUN update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
 COPY ./dockerfile/scripts/javabuild.sh /var/lib/beachfront/javabuild.sh
 COPY ./dockerfile/maven/settings.xml /etc/maven/settings.xml
 
-RUN /var/lib/beachfront/javabuild.sh
+RUN bash /var/lib/beachfront/javabuild.sh
 
 CMD ["echo", "This image has no default run command."]
