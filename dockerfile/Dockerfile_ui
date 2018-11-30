@@ -1,0 +1,19 @@
+FROM cloudfoundry/cflinuxfs2:1.46.0
+
+WORKDIR /var/lib/beachfront
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get update && apt-get install -y \
+    git-core \
+    nodejs
+
+RUN git clone https://github.com/venicegeo/bf-ui.git
+WORKDIR /var/lib/beachfront/bf-ui
+
+RUN rm .npmrc
+RUN npm config set strict-ssl false
+RUN npm install
+RUN npm run typings:install
+RUN npm run create-ssl-certs
+
+CMD ["npm", "run", watch"]

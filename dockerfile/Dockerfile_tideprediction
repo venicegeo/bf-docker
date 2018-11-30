@@ -1,0 +1,19 @@
+FROM cloudfoundry/cflinuxfs2:1.46.0
+
+WORKDIR /var/lib/beachfront
+
+RUN apt-get update && apt-get install -y \
+    git-core \
+    python-pip \
+    python-dev
+RUN pip install --upgrade pip
+RUN pip install virtualenv
+
+RUN git clone https://github.com/venicegeo/bf-tideprediction.git
+WORKDIR /var/lib/beachfront/bf-tideprediction
+
+RUN virtualenv venv
+RUN /bin/bash -c "source venv/bin/activate && pip install -r requirements.txt"
+RUN ./scripts/extract-historical-data.sh
+
+CMD /bin/bash -c "source venv/bin/activate && gunicorn -t 360 -w 5 -b :8080 bftideprediction:app"

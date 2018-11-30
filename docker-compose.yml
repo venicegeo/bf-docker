@@ -1,0 +1,200 @@
+version: '3'
+services:
+  javabuild:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_javabuild
+    image: beachfront/javabuild:1.0.0
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+  javaruntime:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_javaruntime
+    image: beachfront/javaruntime:1.0.0
+  ui:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_ui
+    image: beachfront/ui:1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      - API_ROOT=http://localhost
+  tideprediction:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_tideprediction
+    image: beachfront/tideprediction:1.0.0
+    expose:
+      - "8080"
+  ndwi:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_ndwi
+    image: beachfront/ndwi:1.0.0
+  access:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+      - geoserver
+    links:
+      - rabbitmq
+      - postgis
+      - geoserver
+    expose:
+      - "8085"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-access-1.0.0.jar
+    environment:
+      - spring.profiles.active=basic-geoserver-auth
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
+  gateway:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - access
+      - ingest
+      - jobmanager
+      - servicecontroller
+      - idam
+    links:
+      - rabbitmq
+      - access
+      - ingest
+      - jobmanager
+      - servicecontroller
+      - idam
+    expose:
+      - "8081"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-gateway-1.0.0.jar
+    environment:
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
+  idam:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8080"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-idam-1.0.0.jar
+    environment:
+      - spring.profiles.active=disable-authn
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+  ingest:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+      - access
+    links:
+      - rabbitmq
+      - postgis
+      - access
+    expose:
+      - "8084"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-ingest-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - vcap.services.pz-blobstore.credentials.access_key_id=null
+      - vcap.services.pz-blobstore.credentials.secret_access_key=null
+      - vcap.services.pz-blobstore.credentials.encryption_key=null
+  jobmanager:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8083"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazza-jobmanager-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+  servicecontroller:
+    image: beachfront/javaruntime:1.0.0
+    depends_on:
+      - javabuild
+      - javaruntime
+      - rabbitmq
+      - postgis
+    links:
+      - rabbitmq
+      - postgis
+    expose:
+      - "8088"
+    volumes:
+      - bfjars:/var/lib/beachfront/target
+    entrypoint: /var/lib/beachfront/entrypoint.sh
+    command: java -jar target/piazzaServiceController-1.0.0.jar
+    environment:
+      - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
+      - vcap.services.pz-postgres.credentials.db_host=postgis
+      - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+  rabbitmq:
+    image: rabbitmq:3.6.6-management
+    expose:
+      - "5672"
+      - "15672"
+  postgis:
+    image: mdillon/postgis:9.5
+    environment:
+      - POSTGRES_USER=piazza
+      - POSTGRES_PASSWORD=piazza
+      - POSTGRES_DB=piazza
+    expose:
+      - "5432"
+  geoserver:
+    image: kartoza/geoserver:latest
+    depends_on:
+      - postgis
+    links:
+      - postgis
+    expose:
+      - "8080"
+volumes:
+  bfjars:

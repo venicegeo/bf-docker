@@ -1,0 +1,14 @@
+FROM cloudfoundry/cflinuxfs2:1.46.0
+
+WORKDIR /var/lib/beachfront
+
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    postgresql-client
+RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update && apt-get install -y \
+    openjdk-8-jre
+
+COPY ./dockerfile/scripts/entrypoint.sh /var/lib/beachfront/entrypoint.sh
+
+CMD ["echo", "This image has no default run command."]
