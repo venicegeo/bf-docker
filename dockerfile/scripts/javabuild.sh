@@ -2,7 +2,6 @@
 
 # Building all of the Beachfront Java applications
 
-# Create the folder that can be mounted as a volume to share all of the output JARs
 mkdir /var/lib/beachfront/target
 
 # Common libraries first
