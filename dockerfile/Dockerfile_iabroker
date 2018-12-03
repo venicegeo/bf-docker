@@ -1,0 +1,25 @@
+FROM cloudfoundry/cflinuxfs2:1.46.0
+
+WORKDIR /var/lib/beachfront
+
+RUN apt-get update && apt-get install -y \
+    software-properties-common
+RUN add-apt-repository ppa:gophers/archive
+RUN add-apt-repository ppa:masterminds/glide
+RUN apt-get update && apt-get install -y \
+    git-core \
+    golang-1.10-go \
+    glide
+
+ENV PATH="$GOPATH/bin:/usr/lib/go-1.10/bin:$PATH"
+ENV GOROOT=/usr/lib/go-1.10
+ENV GOPATH=/var/lib/beachfront
+
+WORKDIR /var/lib/beachfront/src/github.com/venicegeo
+RUN git clone https://github.com/venicegeo/bf-ia-broker
+WORKDIR /var/lib/beachfront/src/github.com/venicegeo/bf-ia-broker
+
+RUN glide install -v
+RUN go install
+
+# CMD ["bf-ia-broker", "service"]

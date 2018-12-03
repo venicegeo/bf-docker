@@ -28,6 +28,18 @@ services:
     image: beachfront/tideprediction:1.0.0
     expose:
       - "8080"
+  iabroker:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile_iabroker
+    image: beachfront/iabroker:1.0.0
+    expose:
+      - "8080"
+    environment:
+      - BF_TIDE_PREDICTION_URL=http://tideprediction:8080/tides
+      - PL_API_URL=https://api.planet.com
+      - PL_API_KEY
+      - PORT=8080
   ndwi:
     build:
       context: .
