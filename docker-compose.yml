@@ -74,6 +74,9 @@ services:
     entrypoint: /var/lib/beachfront/entrypoint.sh
     command: java -jar target/bf-api-2.0.0.jar
     environment:
+      - spring.profiles.active=basic-geoserver-auth,insecure
+      - piazza.server=http://gateway
+      - jwt.enabled=false
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
