@@ -5,11 +5,9 @@ WORKDIR /var/lib/beachfront
 RUN apt-get update && apt-get install -y \
     software-properties-common
 RUN add-apt-repository ppa:gophers/archive
-RUN add-apt-repository ppa:masterminds/glide
 RUN apt-get update && apt-get install -y \
     git-core \
-    golang-1.10-go \
-    glide
+    golang-1.10-go
 
 ENV GOROOT=/usr/lib/go-1.10
 ENV GOPATH=/var/lib/beachfront
