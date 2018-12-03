@@ -19,7 +19,6 @@ WORKDIR /var/lib/beachfront/src/github.com/venicegeo
 RUN git clone https://github.com/venicegeo/bf-ia-broker
 WORKDIR /var/lib/beachfront/src/github.com/venicegeo/bf-ia-broker
 
-RUN glide install -v
-RUN go install
+RUN go install github.com/venicegeo/bf-ia-broker/cmd/bf-ia-broker
 
-# CMD ["bf-ia-broker", "service"]
+CMD ["bf-ia-broker", "service"]
