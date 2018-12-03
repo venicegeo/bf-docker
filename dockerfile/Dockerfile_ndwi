@@ -41,4 +41,6 @@ RUN go install github.com/venicegeo/pzsvc-exec/worker
 
 WORKDIR /var/lib/beachfront
 
-CMD ["echo", "This image has no default run command."]
+RUN git clone https://github.com/venicegeo/pzsvc-ndwi-py
+
+CMD ["dispatcher", "pzsvc-ndwi-py/pzsvc-exec.conf"]

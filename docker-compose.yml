@@ -45,6 +45,12 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile_ndwi
     image: beachfront/ndwi:1.0.0
+    depends_on:
+      - gateway
+    links:
+      - gateway
+    environment:
+      - PZ_ADDR=gateway
   bfapi:
     image: beachfront/javaruntime:1.0.0
     depends_on:
