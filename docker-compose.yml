@@ -33,6 +33,10 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile_iabroker
     image: beachfront/iabroker:1.0.0
+    depends_on:
+      - postgis
+    links:
+      - postgis
     expose:
       - "8080"
     environment:
@@ -61,12 +65,14 @@ services:
       - geoserver
       - gateway
       - tideprediction
+      - iabroker
     links:
       - rabbitmq
       - postgis
       - geoserver
       - gateway
       - tideprediction
+      - iabroker
     expose: 
       - "8080"
     volumes:
@@ -81,6 +87,8 @@ services:
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_password=geoserver
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
       - liquibase.user=piazza
       - liquibase.password=piazza
   access:
@@ -107,6 +115,8 @@ services:
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_password=geoserver
+      - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
       - vcap.services.pz-blobstore.credentials.access_key_id=null
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
@@ -246,5 +256,7 @@ services:
       - postgis
     expose:
       - "8080"
+    ports:
+      - "8282:8080"
 volumes:
   bfjars:
