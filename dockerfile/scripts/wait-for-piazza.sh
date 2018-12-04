@@ -6,7 +6,7 @@ cmd="$@"
 ATTEMPTS=0
 while true
 do
-  curl http://piazza:8080
+  curl http://gateway:8080
 
   if [ $? -eq 0 ]
   then
