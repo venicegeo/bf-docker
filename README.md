@@ -8,7 +8,7 @@ There are a couple of host environment variables that cannot be provided within 
 
 | Variable | Value |
 |---|---|
-| PL_API_KEY | The Planet API Key used to search for imagery metadata. This is required if you wish to search for any of Planet data sources. If not provided, then the below (Local Landsat-8)[local-landsat-8-data-source] steps must be run. |
+| PL_API_KEY | The Planet API Key used to search for imagery metadata. This is required if you wish to search for any of Planet data sources. If not provided, then the below (Local Landsat-8)[#local-landsat-8-data-source] steps must be run. |
 
 ## Running
 
