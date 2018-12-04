@@ -44,6 +44,8 @@ services:
       - PL_API_URL=https://api.planet.com
       - PL_API_KEY
       - PORT=8080
+      - LANDSAT_HOST=https://landsat-pds.s3.amazonaws.com
+      - LANDSAT_INDEX_SCENES_URL=https://landsat-pds.s3.amazonaws.com/c1/L8/scene_list.gz
   ndwi:
     build:
       context: .
@@ -93,7 +95,8 @@ services:
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
       - liquibase.user=piazza
       - liquibase.password=piazza
-      - piazza.port=8081
+      - ia.broker.server=iabroker
+      - piazza.server=http://piazza:80
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -154,6 +157,11 @@ services:
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
       - server.port=8080
+      - jobmanager.url=http://jobmanager:8080
+      - servicecontroller.url=http://servicecontroller:8080
+      - ingest.url=http://ingest:8080
+      - access.url=http://access:8080
+      - security.url=http://idam:8080
   idam:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -202,6 +210,7 @@ services:
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
       - server.port=8080
+      - access.url=http://access:8080
   jobmanager:
     image: beachfront/javaruntime:1.0.0
     depends_on:
