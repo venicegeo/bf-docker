@@ -17,3 +17,10 @@ From this root directory, run `docker-compose up` and then wait a while as all t
 Once up, access the Beachfront UI at `https://localhost:8080/?logged_in=true`
 
 _Note_: Authentication is completely disabled for this compose setup. Therefore, you must access the UI with the above URL with the `logged_in` flag set to true - otherwise an authentication challenge occurs and no OAuth provider has been established within this deployment. 
+
+# Local Landsat-8 Data Source
+
+The local Landsat-8 index that Beachfront maintains (corresponding with the *Public-Data-Set* drop-down option) will not be initially populated during the initial `up`. In order to populate this local Landsat-8 index then run the following commands:
+
+`docker-compose run iabroker bf-ia-broker landsat_ingest`
+`docker-compose run iabroker bf-ia-broker landsat_metadata`
