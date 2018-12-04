@@ -27,3 +27,7 @@ The local Landsat-8 index that Beachfront maintains (corresponding with the *Pub
 and 
 
 `docker-compose run iabroker bf-ia-broker landsat_metadata`
+
+## Note to Windows users
+
+Line endings are very important when running the `docker-compose up`. When moving files around, ensure that all line endings in the scripts are Unix-style using a tool such as `dos2unix`. 
