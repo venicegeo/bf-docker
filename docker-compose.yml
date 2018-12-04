@@ -85,7 +85,7 @@ services:
       - "80:8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/bf-api-2.0.0.jar
     environment:
       - spring.profiles.active=basic-geoserver-auth,insecure
@@ -116,7 +116,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazza-access-1.0.0.jar
     environment:
       - spring.profiles.active=basic-geoserver-auth
@@ -152,7 +152,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazza-gateway-1.0.0.jar
     environment:
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
@@ -179,7 +179,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazza-idam-1.0.0.jar
     environment:
       - spring.profiles.active=disable-authn
@@ -203,7 +203,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazza-ingest-1.0.0.jar
     environment:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
@@ -228,7 +228,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazza-jobmanager-1.0.0.jar
     environment:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
@@ -249,7 +249,7 @@ services:
       - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
-    entrypoint: /var/lib/beachfront/entrypoint.sh
+    entrypoint: /var/lib/beachfront/wait-for-services.sh
     command: java -jar target/piazzaServiceController-1.0.0.jar
     environment:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
