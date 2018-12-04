@@ -48,6 +48,7 @@ services:
       - PORT=8080
       - LANDSAT_HOST=https://landsat-pds.s3.amazonaws.com
       - LANDSAT_INDEX_SCENES_URL=https://landsat-pds.s3.amazonaws.com/c1/L8/scene_list.gz
+      - DATABASE_URL=postgresql://piazza:piazza@postgis:5432/piazza
   ndwi:
     build:
       context: .
