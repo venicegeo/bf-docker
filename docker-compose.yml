@@ -17,6 +17,8 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile_ui
     image: beachfront/ui:1.0.0
+    depends_on:
+      - bfapi
     ports:
       - "8080:8080"
     environment:
@@ -85,7 +87,6 @@ services:
     command: java -jar target/bf-api-2.0.0.jar
     environment:
       - spring.profiles.active=basic-geoserver-auth,insecure
-      - piazza.server=http://gateway
       - jwt.enabled=false
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
@@ -96,7 +97,7 @@ services:
       - liquibase.user=piazza
       - liquibase.password=piazza
       - ia.broker.server=iabroker
-      - piazza.server=http://piazza:80
+      - piazza.server=http://gateway:8080
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
