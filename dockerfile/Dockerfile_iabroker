@@ -19,4 +19,4 @@ WORKDIR /var/lib/beachfront/src/github.com/venicegeo/bf-ia-broker
 
 RUN go install github.com/venicegeo/bf-ia-broker/cmd/bf-ia-broker
 
-CMD ["bf-ia-broker", "serve"]
+CMD bf-ia-broker migrate && bf-ia-broker serve

@@ -1,11 +1,19 @@
 # Beachfront Docker
 
-Dockerizing Beachfront microservices
+Dockerizing Beachfront micro-services
+
+# Required Host Environment Variables
+
+There are a couple of host environment variables that cannot be provided within the compose. Please set up these system variables before running Docker.
+
+| Variable | Value |
+|---|---|
+| PL_API_KEY | The Planet API Key used to search for imagery metadata. This is required if you wish to search for any of Planet data sources. |
 
 # Running
 
-From this root directory, run `docker-compose up` and then wait a while.
+From this root directory, run `docker-compose up` and then wait a while as all the services come online.
 
-Once up, access the Beachfront UI at `localhost:8080`
+Once up, access the Beachfront UI at `https://localhost:8080/?logged_in=true`
 
-_Caveat_: Upon logging in through the OAuth and receiving a valid authentication token, you will be redirected outside of the `localhost` instance of Beachfront. At that point, simply hijack the URL back to `localhost:8080/?logged_in=true` to access the session locally. __TODO__: Mock the OAuth flow as well. 
+_Note_: Authentication is completely disabled for this compose setup. Therefore, you must access the UI with the above URL with the `logged_in` flag set to true - otherwise an authentication challenge occurs and no OAuth provider has been established within this deployment. 
