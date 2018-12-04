@@ -23,4 +23,7 @@ _Note_: Authentication is completely disabled for this compose setup. Therefore,
 The local Landsat-8 index that Beachfront maintains (corresponding with the *Public-Data-Set* drop-down option) will not be initially populated during the initial `up`. In order to populate this local Landsat-8 index then run the following commands:
 
 `docker-compose run iabroker bf-ia-broker landsat_ingest`
+
+and 
+
 `docker-compose run iabroker bf-ia-broker landsat_metadata`

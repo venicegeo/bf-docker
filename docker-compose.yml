@@ -59,7 +59,8 @@ services:
     links:
       - gateway
     environment:
-      - PZ_ADDR=gateway
+      - PZ_ADDR=http://gateway:8080
+      - PZ_API_KEY=null
   bfapi:
     image: beachfront/javaruntime:1.0.0
     depends_on:
