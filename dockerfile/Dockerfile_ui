@@ -16,4 +16,4 @@ RUN npm install
 RUN npm run typings:install
 RUN npm run create-ssl-certs
 
-CMD npm run watch
+CMD ["npm", "run", "watch"]
