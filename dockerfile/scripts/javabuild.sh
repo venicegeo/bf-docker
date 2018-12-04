@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Building all of the Beachfront Java applications
-
 mkdir /var/lib/beachfront/target
 
 # Common libraries first

@@ -75,6 +75,8 @@ services:
       - iabroker
     expose: 
       - "8080"
+    ports:
+      - "80:8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -91,6 +93,7 @@ services:
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
       - liquibase.user=piazza
       - liquibase.password=piazza
+      - piazza.port=8081
   access:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -104,7 +107,7 @@ services:
       - postgis
       - geoserver
     expose:
-      - "8085"
+      - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -120,6 +123,7 @@ services:
       - vcap.services.pz-blobstore.credentials.access_key_id=null
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - server.port=8080
   gateway:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -139,7 +143,7 @@ services:
       - servicecontroller
       - idam
     expose:
-      - "8081"
+      - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -149,6 +153,7 @@ services:
       - vcap.services.pz-blobstore.credentials.access_key_id=null
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - server.port=8080
   idam:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -170,6 +175,7 @@ services:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - server.port=8080
   ingest:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -183,7 +189,7 @@ services:
       - postgis
       - access
     expose:
-      - "8084"
+      - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -195,6 +201,7 @@ services:
       - vcap.services.pz-blobstore.credentials.access_key_id=null
       - vcap.services.pz-blobstore.credentials.secret_access_key=null
       - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - server.port=8080
   jobmanager:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -206,7 +213,7 @@ services:
       - rabbitmq
       - postgis
     expose:
-      - "8083"
+      - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -215,6 +222,7 @@ services:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - server.port=8080
   servicecontroller:
     image: beachfront/javaruntime:1.0.0
     depends_on:
@@ -226,7 +234,7 @@ services:
       - rabbitmq
       - postgis
     expose:
-      - "8088"
+      - "8080"
     volumes:
       - bfjars:/var/lib/beachfront/target
     entrypoint: /var/lib/beachfront/entrypoint.sh
@@ -235,6 +243,7 @@ services:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
+      - server.port=8080
   rabbitmq:
     image: rabbitmq:3.6.6-management
     expose:
