@@ -13,7 +13,7 @@ do
     break
   else 
     let ATTEMPTS=ATTEMPTS+1
-    if [ $ATTEMPTS -gt 10 ]
+    if [ $ATTEMPTS -gt 30 ]
     then
       echo "Timed out waiting for Piazza"
       exit 1
