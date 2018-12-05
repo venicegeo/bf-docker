@@ -3,7 +3,8 @@ FROM cloudfoundry/cflinuxfs2:1.46.0
 WORKDIR /var/lib/beachfront
 
 RUN apt-get update && apt-get install -y \
-    git-core
+    git-core \
+    postgresql-client
 
 # Installing GO environment
 RUN wget https://dl.google.com/go/go1.10.5.linux-amd64.tar.gz
@@ -19,4 +20,8 @@ WORKDIR /var/lib/beachfront/src/github.com/venicegeo/bf-ia-broker
 
 RUN go install github.com/venicegeo/bf-ia-broker/cmd/bf-ia-broker
 
-CMD bf-ia-broker migrate && bf-ia-broker serve
+COPY ./dockerfile/scripts/wait-for-postgis.sh /var/lib/beachfront/wait-for-postgis.sh
+
+ENTRYPOINT ["/var/lib/beachfront/wait-for-postgis.sh"]
+
+CMD ["sh", "-c", "bf-ia-broker --version; bf-ia-broker migrate; bf-ia-broker serve"]
