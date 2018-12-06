@@ -61,6 +61,7 @@ services:
     environment:
       - PZ_ADDR=http://gateway:8080
       - PZ_API_KEY=null
+      - VCAP_APPLICATION={"application_id":"ndwi"}
   bfapi:
     image: beachfront/javaruntime:1.0.0
     depends_on:

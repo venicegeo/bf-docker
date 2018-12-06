@@ -45,6 +45,9 @@ COPY ./dockerfile/scripts/wait-for-piazza.sh /var/lib/beachfront/wait-for-piazza
 
 RUN git clone https://github.com/venicegeo/pzsvc-ndwi-py
 
+RUN yum install dos2unix
+RUN dos2unix pzsvc-ndwi-py/pzsvc-exec.conf
+
 ENTRYPOINT ["/var/lib/beachfront/wait-for-piazza.sh"]
 
 CMD ["dispatcher", "pzsvc-ndwi-py/pzsvc-exec.conf"]
