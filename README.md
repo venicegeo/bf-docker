@@ -31,3 +31,7 @@ and
 ## Note to Windows users
 
 Line endings are very important when running the `docker-compose up`. When moving files around, ensure that all line endings in the scripts are Unix-style using a tool such as `dos2unix`. 
+
+## Docker Resources
+
+This Compose file will start up about a dozen services over half-a-dozen images. To ensure smooth performance, it's highly recommended to check the resources allocated to Docker and increase them to whatever the host machine can support. This configuration has been confirmed functional with 16GB of memory and 3 CPUs. It can function with less, but performance bottlenecks may be encountered. 
