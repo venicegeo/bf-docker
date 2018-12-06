@@ -13,7 +13,7 @@ do
     break
   else 
     let ATTEMPTS=ATTEMPTS+1
-    if [ $ATTEMPTS -gt 10 ]
+    if [ $ATTEMPTS -gt 30 ]
     then
       echo "Timed out waiting for postgis"
       exit 1
@@ -35,7 +35,7 @@ do
     break
   else 
     let ATTEMPTS=ATTEMPTS+1
-    if [ $ATTEMPTS -gt 10 ]
+    if [ $ATTEMPTS -gt 30 ]
     then
       echo "Timed out waiting for geoserver"
       exit 1
@@ -57,7 +57,7 @@ do
     break
   else 
     let ATTEMPTS=ATTEMPTS+1
-    if [ $ATTEMPTS -gt 10 ]
+    if [ $ATTEMPTS -gt 30 ]
     then
       echo "Timed out waiting for rabbitmq"
       exit 1
