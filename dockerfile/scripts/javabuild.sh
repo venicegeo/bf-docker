@@ -4,11 +4,6 @@
 
 mkdir /var/lib/beachfront/target
 
-# Set up ssh key
-ssh-keygen -t rsa -N "" -f my.key
-cat ./.ssh/my.key.pub
-ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-
 # Common libraries first
 git clone https://github.com/venicegeo/pz-jobcommon.git
 pushd pz-jobcommon
@@ -25,7 +20,7 @@ declare -a projects=("pz-access"
                      "bf-api")
 for project in "${projects[@]}"
 do
-  git clone git@github.com:venicegeo/$project.git
+  git clone https://github.com/venicegeo/$project.git
   pushd $project
   mvn org.codehaus.mojo:versions-maven-plugin:2.7:use-dep-version -Dincludes=org.venice.piazza:pz-jobcommon -DdepVersion=LATEST -DforceVersion=true
   mvn -Pbeachfront clean install -DskipTests || break
