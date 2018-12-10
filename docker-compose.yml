@@ -128,9 +128,9 @@ services:
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_password=geoserver
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
-      - vcap.services.pz-blobstore.credentials.access_key_id=null
-      - vcap.services.pz-blobstore.credentials.secret_access_key=null
-      - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - vcap.services.pz-blobstore.credentials.access_key_id
+      - vcap.services.pz-blobstore.credentials.secret_access_key
+      - vcap.services.pz-blobstore.credentials.bucket
       - server.port=8080
   gateway:
     image: beachfront/javaruntime:1.0.0
@@ -158,9 +158,9 @@ services:
     command: java -jar target/piazza-gateway-1.0.0.jar
     environment:
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
-      - vcap.services.pz-blobstore.credentials.access_key_id=null
-      - vcap.services.pz-blobstore.credentials.secret_access_key=null
-      - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - vcap.services.pz-blobstore.credentials.access_key_id
+      - vcap.services.pz-blobstore.credentials.secret_access_key
+      - vcap.services.pz-blobstore.credentials.bucket
       - server.port=8080
       - jobmanager.url=http://jobmanager:8080
       - servicecontroller.url=http://servicecontroller:8080
@@ -215,9 +215,9 @@ services:
       - vcap.services.pz-postgres.credentials.jdbc_uri=jdbc:postgresql://postgis:5432/piazza
       - vcap.services.pz-postgres.credentials.db_host=postgis
       - vcap.services.pz-rabbitmq.credentials.protocols.amqp.host=rabbitmq
-      - vcap.services.pz-blobstore.credentials.access_key_id=null
-      - vcap.services.pz-blobstore.credentials.secret_access_key=null
-      - vcap.services.pz-blobstore.credentials.encryption_key=null
+      - vcap.services.pz-blobstore.credentials.access_key_id
+      - vcap.services.pz-blobstore.credentials.secret_access_key
+      - vcap.services.pz-blobstore.credentials.bucket
       - server.port=8080
       - access.url=http://access:8080
   jobmanager:

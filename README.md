@@ -9,6 +9,11 @@ There are a couple of host environment variables that cannot be provided within 
 | Variable | Value |
 |---|---|
 | PL_API_KEY | The Planet API Key used to search for imagery metadata. This is required if you wish to search for any of Planet data sources. If not provided, then the below [Local Landsat-8](#local-landsat-8-data-source) steps must be run. |
+| vcap.services.pz-blobstore.credentials.access_key_id | The access key to a public S3 bucket for data transfer use. |
+| vcap.services.pz-blobstore.credentials.secret_access_key | The secret key to a public S3 bucket for data transfer use. |
+| vcap.services.pz-blobstore.credentials.bucket | The name of a public S3 bucket for data transfer use. |
+
+_Note_: The above-required S3 variables are soon-to-be deprecated and will no longer be needed soon. If no meaningful values are owned, it is acceptable to set these variables to `null` on the host environment. However, without these variables, the results of the Beachfront jobs cannot succeed since the files can't be moved between the microservices without S3. 
 
 ## Running
 
