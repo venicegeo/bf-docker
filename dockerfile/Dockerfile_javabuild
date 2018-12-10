@@ -1,7 +1,6 @@
 FROM cloudfoundry/cflinuxfs2:1.46.0
 
 WORKDIR /var/lib/beachfront
-
 RUN apt-get update && apt-get install -y \
     maven \
     software-properties-common \

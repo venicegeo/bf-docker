@@ -174,9 +174,11 @@ services:
       - javaruntime
       - rabbitmq
       - postgis
+      - geoserver
     links:
       - rabbitmq
       - postgis
+      - geoserver
     expose:
       - "8080"
     volumes:
@@ -197,10 +199,12 @@ services:
       - rabbitmq
       - postgis
       - access
+      - geoserver
     links:
       - rabbitmq
       - postgis
       - access
+      - geoserver
     expose:
       - "8080"
     volumes:
@@ -223,9 +227,11 @@ services:
       - javaruntime
       - rabbitmq
       - postgis
+      - geoserver
     links:
       - rabbitmq
       - postgis
+      - geoserver
     expose:
       - "8080"
     volumes:
@@ -244,9 +250,11 @@ services:
       - javaruntime
       - rabbitmq
       - postgis
+      - geoserver
     links:
       - rabbitmq
       - postgis
+      - geoserver
     expose:
       - "8080"
     volumes:

@@ -35,14 +35,13 @@ ENV PATH="$GOPATH/bin:/usr/lib/go/bin:$PATH"
 WORKDIR /var/lib/beachfront/src/github.com/venicegeo
 RUN git clone https://github.com/venicegeo/pzsvc-exec
 WORKDIR /var/lib/beachfront/src/github.com/venicegeo/pzsvc-exec
-
+RUN git checkout BEAC-138-Optional-PCF-Tasks
 RUN go install github.com/venicegeo/pzsvc-exec/dispatcher
 RUN go install github.com/venicegeo/pzsvc-exec/worker
 
 WORKDIR /var/lib/beachfront
 
 COPY ./dockerfile/scripts/wait-for-piazza.sh /var/lib/beachfront/wait-for-piazza.sh
-
 RUN git clone https://github.com/venicegeo/pzsvc-ndwi-py
 
 RUN yum install dos2unix
