@@ -22,6 +22,8 @@ do
     fi
   fi
 done
+# Some extra time to wait because sometimes there's a "warmup" period
+sleep 15
 echo "Piazza found"
 
 $cmd
