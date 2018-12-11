@@ -23,6 +23,14 @@ Once up, access the Beachfront UI at `https://localhost:8080/?logged_in=true`
 
 _Note_: Authentication is completely disabled for this compose setup. Therefore, you must access the UI with the above URL with the `logged_in` flag set to true - otherwise an authentication challenge occurs and no OAuth provider has been established within this deployment. 
 
+The complete list of local ports will be opened:
+
+| Port | Application | Function |
+|---|---|---|
+| 8080 | ui | The Beachfront web application user interface. |
+| 80 | api | The Beachfront REST API Services. |
+| 8282 | geoserver | The GeoServer instance for WMS rendering. |
+
 ## Local Landsat-8 Data Source
 
 The local Landsat-8 index that Beachfront maintains (corresponding with the *Public-Data-Set* drop-down option) will not be initially populated during the initial `up`. In order to populate this local Landsat-8 index then run the following commands *after* the initial `up` has successfully been run:

@@ -23,6 +23,7 @@ services:
       - "8080:8080"
     environment:
       - API_ROOT=http://localhost
+      - geoserver.proxy.url=http://localhost/geoserver
   tideprediction:
     build:
       context: .
