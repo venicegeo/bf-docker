@@ -23,7 +23,6 @@ services:
       - "8080:8080"
     environment:
       - API_ROOT=http://localhost
-      - geoserver.proxy.url=http://localhost/geoserver
   tideprediction:
     build:
       context: .
@@ -99,6 +98,7 @@ services:
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_url=http://geoserver:8080/geoserver/index.html
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_password=geoserver
       - vcap.services.pz-geoserver.credentials.boundless_geoserver_username=admin
+      - geoserver.proxy.url=http://localhost/geoserver
       - liquibase.user=piazza
       - liquibase.password=piazza
       - ia.broker.server=iabroker
