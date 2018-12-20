@@ -1,4 +1,4 @@
-FROM cloudfoundry/cflinuxfs2:1.46.0
+FROM cloudfoundry/cflinuxfs3
 
 WORKDIR /var/lib/beachfront
 
