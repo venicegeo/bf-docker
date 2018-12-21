@@ -1,13 +1,14 @@
 FROM cloudfoundry/cflinuxfs3
 
 WORKDIR /var/lib/beachfront
+
+RUN mkdir -p /usr/share/man/man1
+RUN echo "deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DA1A4A13543B466853BAF164EB9B1D8886F44E2A
 RUN apt-get update && apt-get install -y \
+    openjdk-8-jdk \
     maven \
-    software-properties-common \
     git-core
-RUN add-apt-repository ppa:openjdk-r/ppa
-RUN apt-get update && apt-get install -y \
-    openjdk-8-jdk
 
 RUN update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
 
