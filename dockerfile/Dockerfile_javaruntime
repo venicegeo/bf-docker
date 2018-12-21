@@ -1,12 +1,12 @@
-FROM cloudfoundry/cflinuxfs2:1.46.0
+FROM cloudfoundry/cflinuxfs3
 
 WORKDIR /var/lib/beachfront
 
+RUN echo "deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DA1A4A13543B466853BAF164EB9B1D8886F44E2A
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    postgresql-client
-RUN add-apt-repository ppa:openjdk-r/ppa
-RUN apt-get update && apt-get install -y \
+    postgresql-client \
     openjdk-8-jre
 
 COPY ./dockerfile/scripts/wait-for-services.sh /var/lib/beachfront/wait-for-services.sh

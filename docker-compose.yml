@@ -288,7 +288,5 @@ services:
       - postgis
     expose:
       - "8080"
-    ports:
-      - "8282:8080"
 volumes:
   bfjars:

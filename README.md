@@ -29,7 +29,6 @@ The complete list of local ports will be opened:
 |---|---|---|
 | 8080 | ui | The Beachfront web application user interface. |
 | 80 | api | The Beachfront REST API Services. |
-| 8282 | geoserver | The GeoServer instance for WMS rendering. |
 
 ## Local Landsat-8 Data Source
 
